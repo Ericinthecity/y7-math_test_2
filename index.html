@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y7 Maths — Challenge Test 2025/26</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0e0f;
+  --surface: #161618;
+  --surface2: #1e1e21;
+  --surface3: #26262a;
+  --border: rgba(255,255,255,.07);
+  --border2: rgba(255,255,255,.13);
+  --text: #f0ede8;
+  --muted: #888680;
+  --faint: #444240;
+  --accent: #f0c55a;
+  --accent2: #e8855a;
+  --green: #6ecb8a;
+  --red: #e87070;
+  --amber: #f0c55a;
+  --blue: #6ab4f0;
+  --u1:#6ab4f0; --u2:#6ecb8a; --u3:#c57af0; --u4:#f0a55a;
+  --u5:#5acef0; --u6:#f07a9a; --u7:#8adf8a; --u8:#f05a5a; --u9:#f0c55a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Syne',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ── TOP BAR ── */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(14,14,15,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:16px;
+  padding:0 28px;height:52px;
+}
+.tb-logo{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--accent);
+  letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid rgba(240,197,90,.3);
+  padding:3px 10px;border-radius:2px;
+}
+.tb-title{font-size:13px;font-weight:600;color:var(--text)}
+.tb-meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
+.tb-right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  padding:3px 10px;border-radius:20px;
+  border:1px solid var(--border2);color:var(--muted);
+  white-space:nowrap;
+}
+.tbtn{
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:600;
+  padding:6px 16px;border-radius:4px;border:none;cursor:pointer;
+  transition:all .15s;letter-spacing:.02em;
+}
+.tbtn-check{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}
+.tbtn-check:hover{background:var(--surface3)}
+.tbtn-submit{background:var(--accent);color:#111}
+.tbtn-submit:hover{background:#f5d070}
+.tbtn-reset{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.tbtn-reset:hover{color:var(--red);border-color:var(--red)}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  padding:56px 40px 40px;
+  max-width:860px;margin:0 auto;
+  overflow:hidden;
+}
+.hero-tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--accent);
+  letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--accent)}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(32px,5vw,52px);
+  font-weight:300;line-height:1.1;
+  color:var(--text);
+  margin-bottom:10px;
+}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;color:var(--muted);
+  margin-bottom:28px;line-height:1.8;
+}
+.hero-meta{
+  display:grid;grid-template-columns:repeat(4,auto);
+  gap:0;width:fit-content;
+  border:1px solid var(--border2);
+}
+.hm-cell{
+  padding:10px 20px;border-right:1px solid var(--border2);
+  font-family:'IBM Plex Mono',monospace;
+}
+.hm-cell:last-child{border-right:none}
+.hm-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.hm-val{font-size:16px;font-weight:600;color:var(--text);margin-top:2px}
+.hero-warn{
+  margin-top:20px;
+  background:rgba(240,197,90,.08);
+  border:1px solid rgba(240,197,90,.2);
+  border-left:3px solid var(--accent);
+  padding:10px 16px;
+  font-size:13px;color:rgba(240,197,90,.9);
+  font-family:'IBM Plex Mono',monospace;
+  border-radius:0 4px 4px 0;
+}
+
+/* ── PROGRESS ── */
+.prog-wrap{
+  max-width:860px;margin:0 auto;
+  padding:0 40px 24px;
+}
+.prog-row{
+  display:flex;justify-content:space-between;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  color:var(--muted);margin-bottom:8px;
+}
+.prog-bar{height:2px;background:var(--surface3);border-radius:1px}
+.prog-fill{height:100%;background:var(--accent);border-radius:1px;transition:width .4s ease}
+.score-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;margin-top:12px;
+  border:1px solid var(--border);
+}
+.ss-cell{
+  padding:10px 16px;background:var(--surface);
+  text-align:center;
+}
+.ss-val{font-size:20px;font-weight:700;color:var(--text)}
+.ss-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.08em}
+
+/* ── UNIT HEADER ── */
+.unit-hdr{
+  max-width:860px;margin:32px auto 0;
+  padding:0 40px;
+}
+.unit-hdr-inner{
+  display:flex;align-items:center;gap:12px;
+  border-top:1px solid;
+  padding-top:14px;padding-bottom:10px;
+}
+.u-num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;text-transform:uppercase;letter-spacing:.12em;
+  padding:3px 8px;border-radius:2px;
+  font-weight:600;
+}
+.u-name{font-size:17px;font-weight:700}
+.u-marks{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
+
+/* ── QUESTION CARD ── */
+.qwrap{max-width:860px;margin:0 auto;padding:2px 40px}
+.qcard{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:20px 22px;
+  margin-bottom:3px;
+  transition:border-color .2s;
+  position:relative;
+}
+.qcard:hover{border-color:var(--border2)}
+.qcard.answered{border-left:2px solid var(--border2)}
+.qcard.all-correct{border-left:2px solid var(--green)}
+.qcard.some-wrong{border-left:2px solid var(--red)}
+
+.q-top{display:flex;align-items:flex-start;gap:12px}
+.q-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;font-weight:600;
+  color:var(--accent2);white-space:nowrap;
+  background:rgba(232,133,90,.1);
+  border:1px solid rgba(232,133,90,.2);
+  padding:2px 8px;border-radius:2px;
+  flex-shrink:0;margin-top:1px;
+}
+.q-body{flex:1}
+.q-stem{
+  font-family:'Fraunces',serif;
+  font-size:15px;line-height:1.65;
+  margin-bottom:12px;color:var(--text);
+}
+.q-stem strong{font-weight:500;color:#fff}
+.q-stem em{font-style:italic;color:var(--muted)}
+.q-stem code{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;background:var(--surface2);
+  padding:1px 6px;border-radius:3px;
+  color:var(--blue);
+}
+.q-marks-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  color:var(--muted);white-space:nowrap;flex-shrink:0;
+  border:1px solid var(--border);padding:2px 8px;border-radius:20px;
+}
+.difficulty{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  padding:2px 7px;border-radius:2px;margin-left:auto;
+}
+.diff-med{background:rgba(240,165,90,.12);color:var(--f0a55a,#f0a55a);color:#f0a55a}
+.diff-hard{background:rgba(232,112,112,.12);color:var(--red)}
+.diff-ext{background:rgba(197,122,240,.15);color:#c57af0}
+
+/* inputs */
+.ans-row{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.part-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.part-lbl{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;color:var(--muted);
+  min-width:100px;flex-shrink:0;
+}
+.ans-in{
+  flex:1;min-width:160px;max-width:320px;
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:3px;
+  padding:7px 12px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;color:var(--text);
+  outline:none;transition:border-color .15s;
+}
+.ans-in:focus{border-color:rgba(240,197,90,.5)}
+.ans-in.correct{border-color:var(--green);background:rgba(110,203,138,.08)}
+.ans-in.wrong{border-color:var(--red);background:rgba(232,112,112,.08)}
+.ans-in::placeholder{color:var(--faint)}
+
+/* feedback */
+.fb{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;margin-top:8px;
+  padding:7px 12px;border-radius:3px;
+  display:none;line-height:1.6;
+}
+.fb.show{display:block}
+.fb.ok{background:rgba(110,203,138,.1);border:1px solid rgba(110,203,138,.2);color:var(--green)}
+.fb.bad{background:rgba(232,112,112,.1);border:1px solid rgba(232,112,112,.2);color:var(--red)}
+.fb.part{background:rgba(240,197,90,.08);border:1px solid rgba(240,197,90,.2);color:var(--amber)}
+
+/* hint */
+.hint-toggle{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  color:var(--faint);background:none;border:none;cursor:pointer;
+  padding:4px 0;text-decoration:underline;text-underline-offset:3px;
+  transition:color .15s;
+}
+.hint-toggle:hover{color:var(--muted)}
+.hint-box{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  color:var(--muted);background:var(--surface2);
+  border-left:2px solid var(--border2);
+  padding:8px 12px;margin-top:6px;
+  line-height:1.7;display:none;
+}
+.hint-box.show{display:block}
+
+/* formula box */
+.formula{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;color:var(--blue);
+  background:var(--surface2);
+  border:1px solid rgba(106,180,240,.15);
+  padding:10px 14px;margin:10px 0;
+  border-radius:3px;line-height:1.8;
+}
+
+/* ── RESULTS ── */
+.results{
+  max-width:860px;margin:32px auto;
+  padding:0 40px;
+  display:none;
+}
+.results.show{display:block}
+.res-card{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:4px;
+  overflow:hidden;
+}
+.res-top{
+  padding:32px 40px;
+  display:flex;align-items:center;gap:32px;
+  border-bottom:1px solid var(--border);
+}
+.res-score-big{
+  font-family:'Fraunces',serif;
+  font-size:72px;font-weight:300;
+  line-height:1;color:var(--text);
+}
+.res-score-big span{font-size:28px;color:var(--muted)}
+.res-info{flex:1}
+.res-grade{
+  font-size:22px;font-weight:700;
+  margin-bottom:6px;
+}
+.res-pct{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14px;color:var(--muted);
+}
+.res-msg{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:15px;color:var(--muted);
+  margin-top:8px;
+}
+.unit-breakdown{padding:24px 40px}
+.unit-breakdown h3{
+  font-size:11px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px;
+  font-family:'IBM Plex Mono',monospace;
+}
+.ub-row{
+  display:flex;align-items:center;gap:12px;
+  padding:8px 0;border-bottom:1px solid var(--border);
+}
+.ub-row:last-child{border-bottom:none}
+.ub-name{font-size:13px;flex:1}
+.ub-bar-track{width:180px;height:4px;background:var(--surface3);border-radius:2px}
+.ub-bar-fill{height:100%;border-radius:2px;transition:width .6s ease}
+.ub-score{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;color:var(--muted);
+  min-width:40px;text-align:right;
+}
+
+/* ── FOOTER ── */
+.footer{
+  max-width:860px;margin:0 auto;padding:24px 40px 48px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  color:var(--faint);
+  display:flex;justify-content:space-between;
+  border-top:1px solid var(--border);
+}
+
+@media(max-width:600px){
+  .hero,  .prog-wrap, .qwrap, .unit-hdr, .results, .footer{padding-left:16px;padding-right:16px}
+  .hero h1{font-size:28px}
+  .hero-meta{grid-template-columns:1fr 1fr}
+  .hm-cell:nth-child(2){border-right:none}
+  .hm-cell:nth-child(3){border-top:1px solid var(--border2)}
+  .res-top{flex-direction:column;gap:16px}
+  .ub-bar-track{width:100px}
+  .tb-meta,.chip{display:none}
+}
+
+@media print{
+  .topbar{display:none}
+  body{background:#fff;color:#000}
+  .qcard{border:1px solid #ccc}
+  .ans-in{background:#f9f9f9;color:#000;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="tb-logo">Y7</div>
+  <div class="tb-title">Challenge Test</div>
+  <div class="tb-meta">2025/26 · Non-calculator · 65 marks</div>
+  <div class="tb-right">
+    <span class="chip" id="chip-prog">0 / 34 answered</span>
+    <button class="tbtn tbtn-reset" onclick="resetAll()">Reset</button>
+    <button class="tbtn tbtn-check" onclick="checkAll()">Check answers</button>
+    <button class="tbtn tbtn-submit" onclick="submitTest()">Submit →</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Shrewsbury International School Bangkok</div>
+  <h1>End of Year<br><em>Challenge Paper</em></h1>
+  <div class="hero-sub">
+    Units 1–8 · Harder questions · More interleaving · Communication marks throughout<br>
+    Difficulty: ◆◆◆◇ &nbsp;|&nbsp; This paper is designed to stretch — some questions combine multiple topics.
+  </div>
+  <div class="hero-meta">
+    <div class="hm-cell"><div class="hm-label">Date</div><div class="hm-val">20 May 2026</div></div>
+    <div class="hm-cell"><div class="hm-label">Time</div><div class="hm-val">60 min</div></div>
+    <div class="hm-cell"><div class="hm-label">Calculator</div><div class="hm-val">✗ None</div></div>
+    <div class="hm-cell"><div class="hm-label">Marks</div><div class="hm-val">65</div></div>
+  </div>
+  <div class="hero-warn">⚠ Show all working — method marks are available even when the final answer is wrong. Include units where needed (L, S, U marks apply).</div>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-wrap">
+  <div class="prog-row">
+    <span id="prog-txt">0 of 34 answered</span>
+    <span id="prog-pct">0%</span>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  <div class="score-strip">
+    <div class="ss-cell"><div class="ss-val" id="sc-cor">0</div><div class="ss-lbl">Correct</div></div>
+    <div class="ss-cell"><div class="ss-val" id="sc-marks">0 / 65</div><div class="ss-lbl">Marks</div></div>
+    <div class="ss-cell"><div class="ss-val" id="sc-pct">—</div><div class="ss-lbl">Score %</div></div>
+  </div>
+</div>
+
+<div id="test-body"></div>
+
+<div class="results" id="results">
+  <div class="res-card">
+    <div class="res-top">
+      <div class="res-score-big" id="res-big">—<span>/65</span></div>
+      <div class="res-info">
+        <div class="res-grade" id="res-grade"></div>
+        <div class="res-pct" id="res-pct"></div>
+        <div class="res-msg" id="res-msg"></div>
+      </div>
+    </div>
+    <div class="unit-breakdown">
+      <h3>Unit breakdown</h3>
+      <div id="unit-rows"></div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:16px">
+    <button class="tbtn tbtn-check" onclick="resetAll()" style="padding:10px 28px">Try again</button>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Shrewsbury International School Bangkok · Y7 Maths Challenge Paper 2025/26</span>
+  <span>Non-calculator · 65 marks · 60 minutes</span>
+</div>
+
+<script>
+const UNITS = [
+  {name:"Place value",color:"#6ab4f0",marks:7},
+  {name:"Properties of number",color:"#6ecb8a",marks:7},
+  {name:"Arithmetic",color:"#c57af0",marks:7},
+  {name:"Expressions & equations",color:"#f0a55a",marks:9},
+  {name:"Coordinates",color:"#5acef0",marks:5},
+  {name:"Area & perimeter",color:"#f07a9a",marks:8},
+  {name:"Fractions",color:"#8adf8a",marks:8},
+  {name:"Fractions & ratios ★",color:"#f05a5a",marks:10},
+  {name:"Interleaved problem solving",color:"#f0c55a",marks:4},
+];
+
+function norm(s){
+  return String(s).trim().toLowerCase()
+    .replace(/\s+/g,' ')
+    .replace(/[×x]/g,'*')
+    .replace(/[÷]/g,'/')
+    .replace(/²/g,'^2')
+    .replace(/³/g,'^3')
+    .replace(/[£$]/g,'')
+    .replace(/\s*cm²/g,'cm2')
+    .replace(/\s*m²/g,'m2')
+    .replace(/\s*cm/g,'cm')
+    .replace(/\s*g\b/g,'g')
+    .replace(/,/g,'')
+}
+function match(inp,acc){
+  const n=norm(inp);
+  if(typeof acc==='string') return n===norm(acc);
+  if(Array.isArray(acc)) return acc.some(a=>n===norm(a));
+  return false;
+}
+
+const QS=[
+// ── UNIT 1 ──
+{u:0,id:"q1",num:"Q1",diff:"med",
+ stem:"The number <strong>4.07 × 10⁶</strong> is written in standard form. Write it as an ordinary number.",
+ marks:1,hint:"Multiply by 1,000,000 — move the decimal point 6 places right.",
+ parts:[{id:"q1",accept:["4070000","4 070 000"]}]},
+
+{u:0,id:"q2",num:"Q2",diff:"hard",
+ stem:"A box weighs <strong>2.45 kg</strong>. A second box weighs <strong>870 g</strong>. A third box weighs <strong>1.2 kg</strong>. Find the total weight in <strong>kg</strong>, then convert your answer to <strong>grams</strong>. <em>[S, U]</em>",
+ marks:3,hint:"Convert all to the same unit first. 1 kg = 1000 g.",
+ parts:[
+   {id:"q2a",label:"Total in kg:",accept:["4.52","4.52kg","4.52 kg"]},
+   {id:"q2b",label:"Total in g:",accept:["4520","4520g","4520 g"]},
+ ]},
+
+{u:0,id:"q3",num:"Q3",diff:"hard",
+ stem:"Place these in order from <strong>smallest to largest</strong>: &nbsp; <strong>−4.2,&nbsp; −4,&nbsp; 0.04,&nbsp; −0.4,&nbsp; 4 × 10⁻¹,&nbsp; −4.02</strong>",
+ marks:2,hint:"4 × 10⁻¹ = 0.4. Then compare negatives carefully — more negative means smaller.",
+ parts:[{id:"q3",accept:["-4.2, -4.02, -4, -0.4, 0.04, 4 × 10⁻¹","-4.2,-4.02,-4,-0.4,0.04,0.4","-4.2, -4.02, -4, -0.4, 0.04, 0.4"]}]},
+
+{u:0,id:"q4",num:"Q4",diff:"med",
+ stem:"A rectangle is <strong>3.6 m</strong> long and <strong>85 cm</strong> wide. Find its area in <strong>cm²</strong>. <em>[U]</em>",
+ marks:2,hint:"Convert both measurements to cm first.",
+ parts:[{id:"q4",accept:["30600","30600 cm2","30600cm2"]}]},
+
+// ── UNIT 2 ──
+{u:1,id:"q5",num:"Q5",diff:"hard",
+ stem:"Two buses leave a station at the same time. Bus A departs every <strong>18 minutes</strong>, Bus B every <strong>24 minutes</strong>. After how many minutes will they next depart together? Show your method using prime factor decomposition. <em>[S, L]</em>",
+ marks:3,hint:"Find the LCM of 18 and 24 using prime factors.",
+ parts:[{id:"q5",accept:["72","72 minutes","72 mins"]}]},
+
+{u:1,id:"q6",num:"Q6",diff:"hard",
+ stem:"Simplify: &nbsp;<strong>2⁴ × 2³ ÷ 2⁵</strong>",
+ marks:2,hint:"Apply index laws step by step: multiply first (add powers), then divide (subtract powers).",
+ parts:[{id:"q6",accept:["2^2","2²","4"]}]},
+
+{u:1,id:"q7",num:"Q7",diff:"ext",
+ stem:"<strong>★</strong> The HCF of two numbers is <strong>6</strong> and their LCM is <strong>180</strong>. One of the numbers is <strong>12</strong>. Find the other number. <em>[S]</em>",
+ marks:2,hint:"Use the relationship: HCF × LCM = product of the two numbers.",
+ parts:[{id:"q7",accept:["90"]}]},
+
+// ── UNIT 3 ──
+{u:2,id:"q8",num:"Q8",diff:"med",
+ stem:"Calculate, showing all working clearly: <em>[L]</em>",
+ marks:3,hint:"Align decimal points for addition/subtraction; multiply both by 100 for the division.",
+ parts:[
+   {id:"q8a",label:"(a) 34.07 − 9.8 + 4.003:",accept:["28.273"]},
+   {id:"q8b",label:"(b) 15.6 ÷ 0.04:",accept:["390"]},
+ ]},
+
+{u:2,id:"q9",num:"Q9",diff:"hard",
+ stem:"Without a calculator, find the value of: &nbsp; <strong>4 + 3² × (8 − 5) ÷ 9 − 1</strong>",
+ marks:2,hint:"BODMAS: Brackets → Orders (powers) → Division/Multiplication → Addition/Subtraction.",
+ parts:[{id:"q9",accept:["6"]}]},
+
+{u:2,id:"q10",num:"Q10",diff:"hard",
+ stem:"Use <strong>any mental method</strong> to calculate <strong>37 × 99</strong>. Show your method clearly. <em>[S]</em>",
+ marks:2,hint:"Think of 99 as (100 − 1). Use the distributive law.",
+ parts:[{id:"q10",accept:["3663"]}]},
+
+// ── UNIT 4 ──
+{u:3,id:"q11",num:"Q11",diff:"med",
+ stem:"Expand and simplify: &nbsp;<strong>2(3x − 4) − 3(x − 5)</strong>",
+ marks:2,hint:"Watch the signs carefully — especially −3 × −5.",
+ parts:[{id:"q11",accept:["3x + 7","3x+7"]}]},
+
+{u:3,id:"q12",num:"Q12",diff:"hard",
+ stem:"Factorise fully, then evaluate when <strong>x = −3</strong>: &nbsp; <strong>6x² + 9x</strong> <em>[S]</em>",
+ marks:3,hint:"Find the HCF of the terms first. Then substitute x = −3 into the factorised form.",
+ parts:[
+   {id:"q12a",label:"Factorised form:",accept:["3x(2x + 9)","3x(2x+9)"]},
+   {id:"q12b",label:"Value when x = −3:",accept:["-9","-9"]},
+ ]},
+
+{u:3,id:"q13",num:"Q13",diff:"hard",
+ stem:"The formula for the area of a trapezium is <strong>A = ½(a + b)h</strong>.<br>Find <strong>a</strong> when <strong>A = 40</strong>, <strong>b = 6</strong>, <strong>h = 8</strong>. Show full working. <em>[S, L]</em>",
+ marks:3,hint:"Substitute the known values and rearrange to solve for a.",
+ parts:[{id:"q13",accept:["4"]}]},
+
+{u:3,id:"q14",num:"Q14",diff:"ext",
+ stem:"<strong>★</strong> The expression <strong>5(2x + k) − 3(x − 2)</strong> simplifies to <strong>7x + 31</strong>. Find the value of <strong>k</strong>. <em>[S, L]</em>",
+ marks:3,hint:"Expand both brackets, collect like terms, then compare coefficients.",
+ parts:[{id:"q14",accept:["5"]}]},
+
+// ── UNIT 5 ──
+{u:4,id:"q15",num:"Q15",diff:"hard",
+ stem:"Points A(−3, 1), B(5, 1), C(5, −4) and D form a rectangle.<br>(a) Find the coordinates of D.<br>(b) Find the perimeter of rectangle ABCD. <em>[S, U]</em><br>(c) M is the midpoint of AC. Find M.",
+ marks:5,hint:"D shares its x with A and its y with C. Perimeter = 2(length + width). Midpoint: average the coordinates.",
+ parts:[
+   {id:"q15a",label:"(a) D =",accept:["(-3, -4)","(-3,-4)"]},
+   {id:"q15b",label:"(b) Perimeter =",accept:["26","26 units","26 cm"]},
+   {id:"q15c",label:"(c) M =",accept:["(1, -1.5)","(1,-1.5)","(1, -3/2)"]},
+ ]},
+
+// ── UNIT 6 ──
+{u:5,id:"q16",num:"Q16",diff:"hard",
+ stem:"A compound shape is made from a rectangle <strong>12 cm × 7 cm</strong> with a triangle of base <strong>12 cm</strong> and height <strong>5 cm</strong> on top. Find the total area and the perimeter. The slant sides of the triangle are each <strong>6.5 cm</strong>. <em>[S, L, U]</em>",
+ marks:4,hint:"Area = rectangle + triangle. Perimeter: don't include the shared side between rectangle and triangle.",
+ parts:[
+   {id:"q16a",label:"Total area (cm²):",accept:["114","114 cm2","114cm2"]},
+   {id:"q16b",label:"Perimeter (cm):",accept:["51","51 cm","51cm"]},
+ ]},
+
+{u:5,id:"q17",num:"Q17",diff:"hard",
+ stem:"A parallelogram and a trapezium have the <strong>same area</strong>. The parallelogram has base <strong>9 cm</strong> and height <strong>6 cm</strong>. The trapezium has parallel sides <strong>8 cm</strong> and <strong>b cm</strong>, and height <strong>4 cm</strong>. Find <strong>b</strong>. <em>[S, L]</em>",
+ marks:4,hint:"Find the area of the parallelogram first. Then set the trapezium area formula equal to it and solve.",
+ parts:[{id:"q17",accept:["19"]}]},
+
+// ── UNIT 7 ──
+{u:6,id:"q18",num:"Q18",diff:"hard",
+ stem:"Calculate, giving answers as fractions in their simplest form:",
+ marks:4,hint:"Convert mixed numbers to improper fractions. To divide, multiply by the reciprocal.",
+ parts:[
+   {id:"q18a",label:"(a) 3½ + 2¾ − 1⅙:",accept:["5 1/12","61/12","5+1/12"]},
+   {id:"q18b",label:"(b) 2⅔ ÷ 1⅗:",accept:["5/3","1 2/3","1+2/3"]},
+ ]},
+
+{u:6,id:"q19",num:"Q19",diff:"hard",
+ stem:"A recipe uses <strong>⅔</strong> of a bag of flour for one batch of biscuits. Aisha has <strong>3¾</strong> bags of flour. How many <em>complete</em> batches can she make? <em>[S, L]</em>",
+ marks:3,hint:"Divide 3¾ by ⅔. Convert to improper fractions, then multiply by the reciprocal.",
+ parts:[{id:"q19",accept:["5"]}]},
+
+{u:6,id:"q20",num:"Q20",diff:"med",
+ stem:"Place these in order smallest → largest: &nbsp;<strong>5/8, &nbsp; 7/12, &nbsp; 3/5, &nbsp; 11/20</strong>",
+ marks:2,hint:"Find the LCD (it's 60), convert all fractions, then compare.",
+ parts:[{id:"q20",accept:["11/20, 7/12, 3/5, 5/8","11/20,7/12,3/5,5/8"]}]},
+
+// ── UNIT 8 ──
+{u:7,id:"q21",num:"Q21",diff:"med",
+ stem:"Three siblings share a prize in the ratio <strong>2 : 3 : 7</strong>. The eldest receives <strong>£84</strong>. Find the total prize and the youngest's share. <em>[S, L]</em>",
+ marks:3,hint:"The eldest has 7 parts. Find 1 part, then the total and youngest's share.",
+ parts:[
+   {id:"q21a",label:"Total prize:",accept:["144","£144"]},
+   {id:"q21b",label:"Youngest's share:",accept:["24","£24"]},
+ ]},
+
+{u:7,id:"q22",num:"Q22",diff:"hard",
+ stem:"A map has a scale of <strong>1 : 25 000</strong>. Two towns are <strong>7.2 cm</strong> apart on the map. Find the real distance in <strong>km</strong>. <em>[S, U]</em>",
+ marks:3,hint:"Multiply 7.2 by 25,000 to get cm, then convert to km (÷ 100,000).",
+ parts:[{id:"q22",accept:["1.8","1.8 km","1.8km"]}]},
+
+{u:7,id:"q23",num:"Q23",diff:"hard",
+ stem:"Orange juice is sold in two sizes:<br>• Small: <strong>330 ml</strong> for <strong>£0.85</strong><br>• Large: <strong>1.2 litres</strong> for <strong>£2.76</strong><br>Which is better value? Show clear working. <em>[S, L, U]</em>",
+ marks:3,hint:"Find the cost per ml (or per 100 ml) for each. Compare.",
+ parts:[{id:"q23",accept:["large","the large","large bottle","large size"]}]},
+
+{u:7,id:"q24",num:"Q24",diff:"ext",
+ stem:"<strong>★</strong> A bag contains red and blue counters in the ratio <strong>3 : 5</strong>. 8 more blue counters are added. The ratio is now <strong>3 : 7</strong>. How many red counters are in the bag? <em>[S, L]</em>",
+ marks:3,hint:"Let red = 3k. Blue was 5k, now 5k + 8. Set up 3k/(5k+8) = 3/7 and solve.",
+ parts:[{id:"q24",accept:["12"]}]},
+
+// ── INTERLEAVED ──
+{u:8,id:"q25",num:"Q25",diff:"ext",
+ stem:"<strong>★ Interleaved:</strong> A triangular garden has a base of <strong>(4x − 1) m</strong> and a height of <strong>6 m</strong>. A square lawn inside it has side length <strong>x m</strong>.<br>(a) Write an expression for the area of the triangle. Simplify. <em>[S]</em><br>(b) The area of the triangle is <strong>33 m²</strong>. Find x. <em>[L]</em><br>(c) Hence find the area of the square lawn. <em>[U]</em>",
+ marks:4,hint:"Area of triangle = ½ × base × height. Set equal to 33 and solve for x.",
+ parts:[
+   {id:"q25a",label:"(a) Area expression:",accept:["3(4x-1)","12x - 3","12x-3","3(4x − 1)"]},
+   {id:"q25b",label:"(b) x =",accept:["3"]},
+   {id:"q25c",label:"(c) Lawn area (m²):",accept:["9","9 m2","9m2"]},
+ ]},
+];
+
+const answers={}, checked={};
+
+function diffBadge(d){
+  if(d==='med') return '<span class="difficulty diff-med">◆◆◇◇ Medium</span>';
+  if(d==='hard') return '<span class="difficulty diff-hard">◆◆◆◇ Hard</span>';
+  if(d==='ext') return '<span class="difficulty diff-ext">◆◆◆◆ Extension</span>';
+  return '';
+}
+
+function buildTest(){
+  const body=document.getElementById('test-body');
+  let html='';
+  let curU=-1;
+  QS.forEach((q,qi)=>{
+    if(q.u!==curU){
+      curU=q.u;
+      const u=UNITS[curU];
+      html+=`<div class="unit-hdr"><div class="unit-hdr-inner" style="border-color:${u.color}20">
+        <span class="u-num" style="background:${u.color}18;color:${u.color};border:1px solid ${u.color}30">${curU+1}</span>
+        <span class="u-name" style="color:${u.color}">${u.name}</span>
+        <span class="u-marks">${u.marks} marks</span>
+      </div></div>`;
+    }
+    html+=`<div class="qwrap"><div class="qcard" id="card-${qi}">
+      <div class="q-top">
+        <span class="q-label">${q.num}</span>
+        <div class="q-body">
+          <div class="q-stem">${q.stem}</div>
+          <div class="ans-row">`;
+    if(q.parts.length===1){
+      const p=q.parts[0];
+      html+=`<input class="ans-in" id="${p.id}" placeholder="your answer"
+        oninput="recordAns('${p.id}',${qi})" onchange="recordAns('${p.id}',${qi})">`;
+    } else {
+      q.parts.forEach(p=>{
+        html+=`<div class="part-row">`;
+        if(p.label) html+=`<span class="part-lbl">${p.label}</span>`;
+        html+=`<input class="ans-in" id="${p.id}" placeholder="answer"
+          oninput="recordAns('${p.id}',${qi})" onchange="recordAns('${p.id}',${qi})">`;
+        html+=`</div>`;
+      });
+    }
+    html+=`</div>`;
+    if(q.hint){
+      html+=`<button class="hint-toggle" onclick="toggleHint('h${qi}')">Show hint</button>
+             <div class="hint-box" id="h${qi}">💡 ${q.hint}</div>`;
+    }
+    html+=`<div class="fb" id="fb-${qi}"></div>`;
+    html+=`</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+          <span class="q-marks-tag">${q.marks}m</span>
+          ${diffBadge(q.diff)}
+        </div>
+      </div>
+    </div></div>`;
+  });
+  body.innerHTML=html;
+}
+
+function toggleHint(id){
+  const el=document.getElementById(id);
+  el.classList.toggle('show');
+  const btn=el.previousElementSibling;
+  btn.textContent=el.classList.contains('show')?'Hide hint':'Show hint';
+}
+
+function recordAns(id,qi){
+  answers[id]=document.getElementById(id).value;
+  updateProgress();
+  const card=document.getElementById(`card-${qi}`);
+  const allFilled=QS[qi].parts.every(p=>(answers[p.id]||'').trim().length>0);
+  if(allFilled) card.classList.add('answered');
+  else card.classList.remove('answered');
+}
+
+function updateProgress(){
+  let ans=0;
+  QS.forEach(q=>{
+    if(q.parts.every(p=>(answers[p.id]||'').trim().length>0)) ans++;
+  });
+  const pct=Math.round(ans/QS.length*100);
+  document.getElementById('prog-txt').textContent=`${ans} of ${QS.length} answered`;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('chip-prog').textContent=`${ans} / ${QS.length} answered`;
+}
+
+function checkAll(){
+  let totalCor=0, totalMarks=0;
+  QS.forEach((q,qi)=>{
+    let qCor=0;
+    q.parts.forEach(p=>{
+      const el=document.getElementById(p.id);
+      if(!el) return;
+      el.classList.remove('correct','wrong');
+      const v=(answers[p.id]||'').trim();
+      if(!v) return;
+      if(match(v,p.accept)){qCor++;el.classList.add('correct');}
+      else el.classList.add('wrong');
+    });
+    checked[qi]=qCor;
+    const allC=qCor===q.parts.length;
+    const anyC=qCor>0;
+    const card=document.getElementById(`card-${qi}`);
+    card.classList.remove('all-correct','some-wrong');
+    if(allC) card.classList.add('all-correct');
+    else if(anyC||q.parts.some(p=>(answers[p.id]||'').trim())) card.classList.add('some-wrong');
+    const fb=document.getElementById(`fb-${qi}`);
+    const hasAny=q.parts.some(p=>(answers[p.id]||'').trim().length>0);
+    if(!hasAny){fb.className='fb';fb.innerHTML='';return;}
+    if(allC){
+      fb.className='fb show ok';
+      fb.innerHTML=`✓ Correct — ${q.marks} mark${q.marks>1?'s':''}`;
+    } else if(anyC){
+      fb.className='fb show part';
+      fb.innerHTML=`~ Partially correct — review highlighted answers`;
+    } else {
+      const sol=q.parts.map(p=>Array.isArray(p.accept)?p.accept[0]:p.accept).join('; ');
+      fb.className='fb show bad';
+      fb.innerHTML=`✗ Incorrect. Expected: ${sol}`;
+    }
+    const m=allC?q.marks:anyC?Math.floor(q.marks*qCor/q.parts.length):0;
+    totalMarks+=m;
+    if(allC) totalCor++;
+  });
+  document.getElementById('sc-cor').textContent=totalCor;
+  document.getElementById('sc-marks').textContent=totalMarks+' / 65';
+  document.getElementById('sc-pct').textContent=Math.round(totalMarks/65*100)+'%';
+}
+
+function submitTest(){
+  checkAll();
+  let unitM={};
+  QS.forEach((q,qi)=>{
+    if(!unitM[q.u]) unitM[q.u]={e:0,t:0};
+    const qC=checked[qi]||0;
+    const allC=qC===q.parts.length;
+    const anyC=qC>0;
+    const m=allC?q.marks:anyC?Math.floor(q.marks*qC/q.parts.length):0;
+    unitM[q.u].e+=m; unitM[q.u].t+=q.marks;
+  });
+  const total=Object.values(unitM).reduce((s,u)=>s+u.e,0);
+  const pct=Math.round(total/65*100);
+  document.getElementById('res-big').innerHTML=`${total}<span>/65</span>`;
+  document.getElementById('res-pct').textContent=pct+'%';
+  let grade,msg,col;
+  if(pct>=85){grade='Outstanding';msg='Exceptional work — well prepared for the assessment.';col='#6ecb8a'}
+  else if(pct>=70){grade='Excellent';msg='Strong performance across most units.';col='#6ab4f0'}
+  else if(pct>=55){grade='Good';msg='Solid understanding — revisit any red units.';col='#f0c55a'}
+  else if(pct>=40){grade='Developing';msg='Keep practising — focus on the weaker areas shown below.';col='#f0a55a'}
+  else{grade='Needs more practice';msg='Review the topics from each unit using Sparx and Oak National.';col='#f05a5a'}
+  document.getElementById('res-grade').textContent=grade;
+  document.getElementById('res-grade').style.color=col;
+  document.getElementById('res-msg').textContent=msg;
+  let rows='';
+  UNITS.forEach((u,i)=>{
+    const um=unitM[i]||{e:0,t:u.marks};
+    const up=Math.round(um.e/um.t*100);
+    rows+=`<div class="ub-row">
+      <div class="ub-name">${i+1}. ${u.name}</div>
+      <div class="ub-bar-track"><div class="ub-bar-fill" style="width:${up}%;background:${u.color}"></div></div>
+      <div class="ub-score">${um.e}/${um.t}</div>
+    </div>`;
+  });
+  document.getElementById('unit-rows').innerHTML=rows;
+  const res=document.getElementById('results');
+  res.classList.add('show');
+  res.scrollIntoView({behavior:'smooth'});
+}
+
+function resetAll(){
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  Object.keys(checked).forEach(k=>delete checked[k]);
+  QS.forEach((q,qi)=>{
+    q.parts.forEach(p=>{
+      const el=document.getElementById(p.id);
+      if(el){el.value='';el.classList.remove('correct','wrong');}
+    });
+    const fb=document.getElementById(`fb-${qi}`);
+    if(fb){fb.className='fb';fb.innerHTML='';}
+    const card=document.getElementById(`card-${qi}`);
+    if(card) card.classList.remove('answered','all-correct','some-wrong');
+  });
+  ['sc-cor','sc-marks','sc-pct'].forEach((id,i)=>{
+    document.getElementById(id).textContent=['0','0 / 65','—'][i];
+  });
+  document.getElementById('prog-fill').style.width='0%';
+  document.getElementById('prog-txt').textContent='0 of 34 answered';
+  document.getElementById('prog-pct').textContent='0%';
+  document.getElementById('chip-prog').textContent='0 / 34 answered';
+  document.getElementById('results').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildTest();
+</script>
+</body>
+</html>
